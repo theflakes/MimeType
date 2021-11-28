@@ -1,0 +1,22 @@
+[package]
+name = "mimetype"
+version = "0.1.0"
+authors = ["theflakes"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+tree_magic = "0.2.3"
+libc = "*"
+
+[profile.release]
+lto = true
+panic = 'abort'
+opt-level = "z"
+debug = false
+rpath = false
+debug-assertions = false
+codegen-units = 1
