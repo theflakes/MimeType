@@ -9,7 +9,7 @@ use std::process;
 
 fn get_mimetype(target_file: &str) {
     let file_path = Path::new(target_file);
-    let mut mtype: String = "NONE".to_string();
+    let mut mtype: String = "none".to_string();
     if Path::new(file_path).exists() { 
         let md = metadata(file_path).unwrap();
         if md.is_file() {
