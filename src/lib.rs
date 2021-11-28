@@ -6,6 +6,7 @@ extern crate libc;
 use libc::{c_char};
 use std::ffi::{CStr, CString};
 use std::path::Path;
+use std::fs::metadata;
 
 
 #[no_mangle]
@@ -21,7 +22,10 @@ pub extern "C" fn get_mimetype(target_file: *const c_char) -> *mut c_char {
     let file_path = Path::new(&temp);
     let mut mtype = CString::new("").unwrap();
     if Path::new(file_path).exists() { 
-        mtype = CString::new(tree_magic::from_filepath(file_path)).expect("ERROR");
+        let md = metadata(file_path).unwrap();
+        if md.is_file() {
+            mtype = CString::new(tree_magic::from_filepath(file_path)).expect("ERROR");
+        }
     }
 
     return mtype.into_raw()
