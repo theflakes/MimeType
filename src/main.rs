@@ -21,6 +21,8 @@ fn get_mimetype(target_file: &str) {
 }
 
 fn print_help() {
+    println!("\nAuthor: Brian Kellogg");
+    println!("Determine a file's mimetype.");
     println!("See: https://docs.rs/tree_magic/latest/tree_magic/\n");
     println!("\nUsage: mimetype <file path>\n");
     process::exit(1)
