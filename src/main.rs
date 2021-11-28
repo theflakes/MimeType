@@ -17,7 +17,7 @@ fn get_mimetype(target_file: &str) {
         }
     }
 
-    println!("{:?}", mtype);
+    println!("{}", mtype);
 }
 
 fn print_help() {
