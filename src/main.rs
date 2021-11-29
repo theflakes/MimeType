@@ -30,7 +30,7 @@ fn print_help() {
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
-    if !(args.len() == 2) { print_help() }
+    if args.len() != 2 { print_help() }
     let file_path = &args[1];
     get_mimetype(file_path);
     Ok(())
