@@ -1,23 +1,24 @@
 extern crate tree_magic;
 
 use std::path::Path;
-use std::fs::metadata;
 use std::{io, str};
 use std::env;
 use std::process;
 
 
-fn get_mimetype(target_file: &str) {
-    let file_path = Path::new(target_file);
-    let mut mtype: String = "none".to_string();
-    if Path::new(file_path).exists() { 
-        let md = metadata(file_path).unwrap();
-        if md.is_file() {
-            mtype = tree_magic::from_filepath(file_path);
-        }
-    }
+fn get_mimetype(target_file: &Path) {
+    let mtype = tree_magic::from_filepath(target_file);
 
     println!("{}", mtype);
+}
+
+fn convert_to_path(target_file: &str) -> io::Result<&Path> {
+    let file_path = Path::new(target_file);
+    if file_path.exists() && file_path.is_file() { 
+        return Ok(file_path)
+    }
+
+    process::exit(1)
 }
 
 fn print_help() {
@@ -32,6 +33,7 @@ fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
     if args.len() != 2 { print_help() }
     let file_path = &args[1];
-    get_mimetype(file_path);
+    let path = convert_to_path(&file_path).unwrap();
+    get_mimetype(path);
     Ok(())
 }
